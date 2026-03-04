@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Wysio — AI-powered Product Exploration Platform</title>
 <style>
 /* ─── TOKENS ─────────────────────────────────────────── */
@@ -55,9 +55,11 @@ nav.scrolled{padding:14px 5%;background:rgba(13,27,62,.9);backdrop-filter:blur(2
 
 /* ─── HERO ───────────────────────────────────────────── */
 #hero{
+  min-height:100vh;
   min-height:100svh;
   display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
   padding:0 5% 100px;
+  padding-bottom:max(100px, calc(80px + env(safe-area-inset-bottom)));
   position:relative;overflow:hidden;
   text-align:center;
 }
