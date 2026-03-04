@@ -267,11 +267,42 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 }
 @media(max-width:768px){
   section{padding:80px 5%}
+
+  /* ── NAV: logo + hamburger only, hide CTA button ── */
   nav .nav-links{display:none}
+  nav .nav-cta{display:none}
   .nav-hamburger{display:inline-flex}
+  nav{padding:14px 5%}
+
+  /* ── HERO: anchor content below the fixed nav ── */
+  #hero{
+    justify-content:flex-start;
+    padding-top:calc(72px + env(safe-area-inset-top, 0px));
+    padding-left:16px;
+    padding-right:16px;
+    padding-bottom:max(60px, calc(48px + env(safe-area-inset-bottom, 0px)));
+  }
+  .hero-content{max-width:100%}
+  /* badge: allow wrapping, smaller text so it doesn't overflow */
+  .hero-badge{font-size:.62rem;padding:6px 12px;gap:7px;flex-wrap:wrap;justify-content:center}
+  /* buttons: full-width column stack */
+  .hero-btns{
+    flex-direction:column;
+    align-items:stretch;
+    width:100%;
+    max-width:320px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .btn-primary,.btn-outline{text-align:center;justify-content:center;display:flex}
+  /* stats: tighter gap, always row */
+  .hero-stats{gap:20px;padding-top:28px}
+
+  /* ── SECTIONS ── */
   .team-grid{grid-template-columns:1fr 1fr}
   .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;align-items:flex-start}
+
   /* remove forced desktop line breaks — let text flow naturally */
   h2 br,.market-note br{display:none}
   /* prevent nowrap overflow on small screens */
@@ -282,10 +313,14 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 @media(max-width:500px){
   /* stack memory cards vertically on very small screens */
   .memory-split{grid-template-columns:1fr;max-width:380px}
-  /* hero stats: stack to single column */
-  .hero-stats{gap:28px}
-  /* hero padding */
-  #hero{padding:0 5% 72px}
+  /* hero stats: wrap to 2-column-ish layout with more gap */
+  .hero-stats{gap:24px}
+  /* keep hero padding consistent with 768px rule above */
+  #hero{
+    padding-left:16px;
+    padding-right:16px;
+    padding-bottom:max(60px, calc(48px + env(safe-area-inset-bottom, 0px)));
+  }
 }
 </style>
 </head>
