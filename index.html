@@ -258,6 +258,20 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
   .team-grid{grid-template-columns:1fr 1fr}
   .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;align-items:flex-start}
+  /* remove forced desktop line breaks — let text flow naturally */
+  h2 br{display:none}
+  /* prevent nowrap overflow on small screens */
+  #hero h1 span,#cta h2 span{white-space:normal!important}
+  /* memory cards: reduce padding so numbers breathe */
+  .memory-card{padding:36px 28px}
+}
+@media(max-width:500px){
+  /* stack memory cards vertically on very small screens */
+  .memory-split{grid-template-columns:1fr;max-width:380px}
+  /* hero stats: stack to single column */
+  .hero-stats{gap:28px}
+  /* hero padding */
+  #hero{padding:0 5% 72px}
 }
 </style>
 </head>
