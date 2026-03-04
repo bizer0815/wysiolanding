@@ -50,7 +50,7 @@ nav.scrolled{padding:14px 5%;background:rgba(13,27,62,.9);backdrop-filter:blur(2
 .nav-links{display:flex;gap:32px}
 .nav-links a{font-size:.875rem;font-weight:500;color:var(--w60);transition:color .2s}
 .nav-links a:hover{color:var(--white)}
-.nav-cta{font-family:var(--f-disp);font-weight:700;font-size:.875rem;color:var(--navy);background:var(--green);padding:10px 24px;border-radius:50px;transition:box-shadow .25s,transform .25s}
+.nav-cta{font-family:var(--f-disp);font-weight:700;font-size:.875rem;color:var(--navy);background:var(--green);padding:10px 24px;border-radius:50px;transition:box-shadow .25s,transform .25s;min-height:44px;display:inline-flex;align-items:center}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 24px var(--g-glow)}
 
 /* ─── HERO ───────────────────────────────────────────── */
@@ -242,9 +242,20 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 .bars-animated .bar-sam{width:70%}
 .bars-animated .bar-som{width:6%}
 
+/* ─── MOBILE NAV ─────────────────────────────────────── */
+.nav-hamburger{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center;flex-direction:column;gap:5px;flex-shrink:0}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:transform .3s,opacity .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{display:none;position:fixed;inset:0;z-index:199;background:rgba(13,27,62,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.nav-mobile.open{display:flex}
+.nav-mobile a{font-family:var(--f-disp);font-size:clamp(1.6rem,5vw,2rem);font-weight:800;color:var(--white);letter-spacing:-.02em;transition:color .2s;min-height:44px;display:flex;align-items:center}
+.nav-mobile a:hover{color:var(--green)}
+.nav-mobile .nav-cta{font-size:.95rem;padding:14px 40px;margin-top:8px}
+
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:1100px){
-  #hero{grid-template-columns:1fr;gap:48px;padding-top:120px}
   .product-header{grid-template-columns:1fr;gap:40px}
   .prob-grid,.why-grid,.uc-grid,.team-grid{grid-template-columns:1fr}
   .uc-grid{gap:2px}
@@ -255,11 +266,12 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 @media(max-width:768px){
   section{padding:80px 5%}
   nav .nav-links{display:none}
+  .nav-hamburger{display:inline-flex}
   .team-grid{grid-template-columns:1fr 1fr}
   .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;align-items:flex-start}
   /* remove forced desktop line breaks — let text flow naturally */
-  h2 br{display:none}
+  h2 br,.market-note br{display:none}
   /* prevent nowrap overflow on small screens */
   #hero h1 span,#cta h2 span{white-space:normal!important}
   /* memory cards: reduce padding so numbers breathe */
@@ -288,7 +300,19 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
     <a href="#team">Team</a>
   </div>
   <a href="#cta" class="nav-cta">Book a Demo</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile" id="navMobile" aria-hidden="true">
+  <a href="#mission" onclick="closeMobileNav()">Mission</a>
+  <a href="#product" onclick="closeMobileNav()">Product</a>
+  <a href="#whynow" onclick="closeMobileNav()">Why Now</a>
+  <a href="#traction" onclick="closeMobileNav()">Traction</a>
+  <a href="#team" onclick="closeMobileNav()">Team</a>
+  <a href="#cta" class="nav-cta" onclick="closeMobileNav()">Book a Demo</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -500,7 +524,7 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 </section>
 
 <!-- TRACTION + MARKET -->
-<section id="traction" style="padding-top:120px;padding-bottom:120px;padding-left:5%;padding-right:5%">
+<section id="traction">
   <div>
     <span class="label reveal">Traction</span>
     <h2 class="reveal">Early momentum.</h2>
@@ -673,6 +697,24 @@ footer{background:rgba(0,0,0,.35);padding:60px 5% 36px;border-top:1px solid var(
 /* nav */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), {passive:true});
+
+/* mobile nav */
+const hamburger = document.getElementById('navHamburger');
+const mobileNav = document.getElementById('navMobile');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+  mobileNav.setAttribute('aria-hidden', !open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileNav.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
 
 /* scroll reveal */
 const obs = new IntersectionObserver(entries => {
